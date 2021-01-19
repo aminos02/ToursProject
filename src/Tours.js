@@ -8,9 +8,9 @@ function Tours({ tours }) {
         <div className="underline"></div>
       </div>
       <div>
-        {tours.map((tour) => (
+        {tours.map((tour) => 
           <Tour key={tour.id} {...tour}></Tour>
-        ))}
+        )}
       </div>
     </section>
   );

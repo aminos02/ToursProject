@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
+import data from "./data.json";
 import Tours from "./Tours";
 import Loading from "./Loading";
-const url = "https://course-api.com/react-tours-project";
+// const url = "https://github.com/aminos02/ToursProject/blob/master/data.json";
 const toursContext = React.createContext();
 function App() {
   const [loading, setLoading] = useState(true);
   const [tours, setTours] = useState([]);
+  console.log(data);
   const removeTour = (id) => {
     setTours((tours) => tours.filter((tour) => tour.id !== id));
   };
   const fetchTours = async () => {
     setLoading(true);
     try {
-      const response = await fetch(url);
-      const data = await response.json();
+      //   const response = await fetch(url);
+      //   const data = await response.json();
       setTours(data);
       setLoading(false);
     } catch (error) {
@@ -36,7 +38,9 @@ function App() {
       <main>
         <div className="title">
           <h2>No Tours</h2>
-          <button className="btn" onClick={fetchTours}>Refresh</button>
+          <button className="btn" onClick={fetchTours}>
+            Refresh
+          </button>
         </div>
       </main>
     );

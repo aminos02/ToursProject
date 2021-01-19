@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-
+import React, { useState,useContext } from "react";
+import {toursContext} from "./App"
 function Tour({ id, name, image, info, price }) {
+    const {removeTour}=useContext(toursContext)
     const [showMore,setShowMore]=useState(false)
     const showHide=()=>{
         setShowMore((show)=>!show)
@@ -18,7 +19,7 @@ function Tour({ id, name, image, info, price }) {
             <button onClick={showHide}>{showMore ?'show less':'read more'}</button>
            </p>
 
-          <button className="delete-btn">Not Interested</button>
+          <button className="delete-btn" onClick={()=>removeTour(id)}>Not Interested</button>
         </footer>
       </div>
     </article>

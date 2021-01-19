@@ -2,36 +2,54 @@ import React, { useState, useEffect } from "react";
 import Tours from "./Tours";
 import Loading from "./Loading";
 const url = "https://course-api.com/react-tours-project";
-
+const toursContext = React.createContext();
 function App() {
-
   const [loading, setLoading] = useState(true);
   const [tours, setTours] = useState([]);
+  const removeTour = (id) => {
+    setTours((tours) => tours.filter((tour) => tour.id !== id));
+  };
   const fetchTours = async () => {
-      setLoading(true)
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        setTours(data);
-        setLoading(false);
-      } catch (error) { 
-          setLoading(true)
-          console.log(error)
-      }
-   
+    setLoading(true);
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      setTours(data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(true);
+      console.log(error);
+    }
   };
   useEffect(() => {
     fetchTours();
   }, []);
-    return loading  ? (
+  if (loading) {
+    return (
+      <main>
+        <Loading />
+      </main>
+    );
+  }
+  if (tours.length === 0) {
+    return (
+      <main>
+        <div className="title">
+          <h2>No Tours</h2>
+          <button className="btn" onClick={fetchTours}>Refresh</button>
+        </div>
+      </main>
+    );
+  }
+  return (
     <main>
-      <Loading />
+      <toursContext.Provider value={{ removeTour }}>
+        <Tours tours={tours} />
+      </toursContext.Provider>
     </main>
-  ) : (
-    <main>
-      <Tours tours={tours}/>
-    </main>
-  )
+  );
 }
 
 export default App;
+
+export { toursContext };

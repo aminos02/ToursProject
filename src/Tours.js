@@ -1,11 +1,19 @@
-import React from 'react'
-
-function Tours() {
-    return (
-        <div>
-            <h1>Tours</h1>
-        </div>
-    )
+import React, { useEffect, useState } from "react";
+import Tour from "./Tour";
+function Tours({ tours }) {
+  return (
+    <section>
+      <div className="title">
+        <h2>Our tours</h2>
+        <div className="underline"></div>
+      </div>
+      <div>
+        {tours.map((tour) => (
+          <Tour key={tour.id} {...tour}></Tour>
+        ))}
+      </div>
+    </section>
+  );
 }
 
-export default Tours
+export default Tours;
